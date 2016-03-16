@@ -10,7 +10,7 @@ public class AboutHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		MessageDialog.openConfirm(null, "Hello Dialog", "Hello Starterkit");
+		MessageDialog.openConfirm(null, "About Dialog", "Starterkit hadler event");
 		return null;
 	}
 
