@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class LibraryViewPart extends ViewPart {
 
@@ -24,34 +25,47 @@ public class LibraryViewPart extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-parent.setLayout(new GridLayout(2, false));
+		parent.setLayout(new GridLayout(2, false));
 		
-		Label lblName = new Label(parent, SWT.NONE);
-		lblName.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
-		lblName.setText("Biblioteka G\u0142\u00F3wna w Capgemini");
+		setLabels(parent);
 		
-		Label lblSearchBookBy = new Label(parent, SWT.NONE);
-		lblSearchBookBy.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblSearchBookBy.setText("Search Book by Title: ");
+		setSearchTextField(parent);
 		
+		addSearchButton(parent);
+		
+		addLibraryTable(parent); 
+
+		addMenus(parent);
+
+
+	}
+
+	private void addLibraryTable(Composite parent) {
+		TableViewer tableViewer = new TableViewer(parent,SWT.MULTI | SWT.H_SCROLL
+			      | SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
+		table = tableViewer.getTable();
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		table.setLinesVisible(true);
+	}
+
+	private void setSearchTextField(Composite parent) {
 		text = new Text(parent, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		new Label(parent, SWT.NONE);
-		
+	}
+
+	private void addSearchButton(Composite parent) {
 		Button btnClick = new Button(parent, SWT.NONE);
-		GridData gd_btnClick = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		GridData gd_btnClick = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
 		gd_btnClick.widthHint = 59;
 		btnClick.setLayoutData(gd_btnClick);
 		btnClick.setText("Search");
+	}
+
+	private void addMenus(Composite parent) {
+		Menu menuTableLibrary = new Menu(table);
+		table.setMenu(menuTableLibrary);
 		
-		TableViewer tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
-		table = tableViewer.getTable();
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		Menu menu_1 = new Menu(table);
-		table.setMenu(menu_1);
-		
-		MenuItem mntmAnuluj = new MenuItem(menu_1, SWT.NONE);
+		MenuItem mntmAnuluj = new MenuItem(menuTableLibrary, SWT.NONE);
 		mntmAnuluj.setText("Anuluj");
 		new Label(parent, SWT.NONE);
 		
@@ -63,13 +77,23 @@ parent.setLayout(new GridLayout(2, false));
 		
 		MenuItem mntmNothing = new MenuItem(menu, SWT.NONE);
 		mntmNothing.setText("Nothing");
-
-
+		new Label(parent, SWT.NONE);
 	}
-
+	
+	private void setLabels(Composite parent) {
+		Label lblName = new Label(parent, SWT.NONE);
+		lblName.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+		lblName.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+		lblName.setText("Biblioteka G\u0142\u00F3wna w Capgemini");
+		
+		Label lblSearchBookBy = new Label(parent, SWT.NONE);
+		lblSearchBookBy.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblSearchBookBy.setText("Search Book by Title: ");
+	}
+	
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
-
+		
 	}
 }
