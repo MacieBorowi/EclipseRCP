@@ -45,7 +45,7 @@ public enum ModelProvider {
 	public void deleteBook(Long id) {
 		for (BookDao book : bookList) {
 			if(book.getId()== id){
-				bookList.remove(id);
+				bookList.remove(book);
 			}
 		}
 	}

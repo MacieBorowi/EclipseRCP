@@ -1,10 +1,15 @@
 package com.starterkit.rcplibrary.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -21,11 +26,12 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.startekit.dao.BookDao;
 import com.startekit.dao.ModelProvider;
 
-public class LibraryViewPart extends ViewPart {
+public class LibraryViewPart extends ViewPart{
 
 	private Text text;
 	private Table table;
 	private TableViewer tableViewer;
+	private ModelProvider service = ModelProvider.INSTANCE;
 	
 	public LibraryViewPart() {
 		// TODO Auto-generated constructor stub
@@ -69,7 +75,7 @@ public class LibraryViewPart extends ViewPart {
 //			}); 
 		
 		tableViewer.setContentProvider(new ArrayContentProvider());
-		tableViewer.setInput(ModelProvider.INSTANCE.getPersons());
+		tableViewer.setInput(service.getPersons());
 		getSite().setSelectionProvider(tableViewer);
 
 	}
@@ -147,7 +153,23 @@ public class LibraryViewPart extends ViewPart {
 		
 		MenuItem mntmAnuluj = new MenuItem(menuTableLibrary, SWT.NONE);
 		mntmAnuluj.setText("Anuluj");
-		new Label(parent, SWT.NONE);
+		
+		MenuItem mntmUsun = new MenuItem(menuTableLibrary, SWT.NONE);
+		mntmUsun.setText("Usuń");
+		mntmUsun.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//service.deleteBook(1L);
+				tableViewer.refresh();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		
 		Menu menu = new Menu(parent);
 		parent.setMenu(menu);
