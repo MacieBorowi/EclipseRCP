@@ -145,6 +145,23 @@ public class LibraryViewPart extends ViewPart{
 		gd_btnClick.widthHint = 59;
 		btnClick.setLayoutData(gd_btnClick);
 		btnClick.setText("Search");
+		btnClick.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				service.findBooksByTitle(text.getText());
+				tableViewer.setInput(service.findBooksByTitle(text.getText()));
+				//getSite().setSelectionProvider(tableViewer);
+				tableViewer.refresh();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
 	}
 
 	private void addMenus(Composite parent) {
@@ -155,12 +172,29 @@ public class LibraryViewPart extends ViewPart{
 		mntmAnuluj.setText("Anuluj");
 		
 		MenuItem mntmUsun = new MenuItem(menuTableLibrary, SWT.NONE);
-		mntmUsun.setText("Usuń");
+		mntmUsun.setText("Usuń 1");
 		mntmUsun.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//service.deleteBook(1L);
+				service.deleteBook(1L);
+				tableViewer.refresh();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		MenuItem mntmDodaj = new MenuItem(menuTableLibrary, SWT.NONE);
+		mntmDodaj.setText("Dodaj 6");
+		mntmDodaj.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				service.saveBook(6L, "bookTitle6", "Author6", "Subiect6", "Description6");;
 				tableViewer.refresh();
 			}
 
@@ -198,6 +232,5 @@ public class LibraryViewPart extends ViewPart{
 	@Override
 	public void setFocus() {
 		tableViewer.getControl().setFocus();
-		
 	}
 }
